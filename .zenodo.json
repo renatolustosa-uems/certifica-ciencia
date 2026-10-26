@@ -1,0 +1,85 @@
+{
+  "title": "Certifica Ciência: a bilingual batch certificate generator / gerador de certificados em lote bilíngue",
+  "upload_type": "software",
+  "description": "<p><strong>Certifica Ciência</strong> is a single-file, browser-based application that generates batch PDF certificates for courses, scientific events and extension projects. Features: Portuguese/English interface; custom background; up to two logos per corner; scanned signatures; optional syllabus back page with workload table; participant import from Excel/CSV; sequential registration numbers; and an exportable registry of issued certificates. All processing runs locally in the user's browser, with no data sent to servers.</p><p><strong>Certifica Ciência</strong> é uma aplicação em arquivo único, executada no navegador, que gera certificados em PDF em lote para cursos, eventos científicos e projetos de extensão, com interface em português e inglês, logotipos, assinaturas, verso com conteúdo programático, importação de participantes por planilha, numeração sequencial e tabela de registros exportável.</p><p>Technical product of the Artificial Intelligence in the Cerrado Research Group (Grupo de Pesquisa Inteligência Artificial no Cerrado), Graduate Program in Agronomy (PGAC), State University of Mato Grosso do Sul (UEMS), Brazil.</p>",
+  "creators": [
+    {
+      "name": "Lustosa Sobrinho, Renato",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)",
+      "orcid": "0000-0003-2176-6745"
+    },
+    {
+      "name": "Zoz, Tiago",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)",
+      "orcid": "0000-0003-2991-5485"
+    },
+    {
+      "name": "Bobadilha, Edson de Lima",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)"
+    },
+    {
+      "name": "Rosa, Elen Cristina Fernandes",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)"
+    },
+    {
+      "name": "Costa, Edilson",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)",
+      "orcid": "0000-0002-4584-6611"
+    },
+    {
+      "name": "Vieira, Gustavo Haralampidou da Costa",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)",
+      "orcid": "0000-0002-6234-3696"
+    },
+    {
+      "name": "Seron, Cássio de Castro",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)",
+      "orcid": "0000-0003-4289-931X"
+    },
+    {
+      "name": "Martins, Murilo Battistuzzi",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)",
+      "orcid": "0000-0002-8759-0917"
+    },
+    {
+      "name": "Oliveira, Carlos Eduardo da Silva",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)",
+      "orcid": "0000-0002-3894-9559"
+    },
+    {
+      "name": "Neves, Vitor Augusto",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)"
+    },
+    {
+      "name": "Barboza Junior, Levi Alves",
+      "affiliation": "Universidade Estadual de Mato Grosso do Sul (UEMS)"
+    },
+    {
+      "name": "Oliveira, Bruno Rodrigues de",
+      "affiliation": "Universidade Estadual Paulista (UNESP)",
+      "orcid": "0000-0002-1037-6541"
+    }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "language": "por",
+  "version": "1.1.0",
+  "publication_date": "2026-10-26",
+  "keywords": [
+    "certificate generator",
+    "gerador de certificados",
+    "academic events",
+    "extension projects",
+    "PDF",
+    "open-source software",
+    "Inteligência Artificial no Cerrado",
+    "UEMS"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "http://dgp.cnpq.br/dgp/espelhogrupo/2871755427518068",
+      "relation": "isPartOf",
+      "resource_type": "other"
+    }
+  ]
+}

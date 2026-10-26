@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifica Ciência</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        /* Cabeçalho e seletor de idioma / Header and language switcher */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .app-header h1 { font-size: 26px; }
+        .app-header p { font-size: 14px; opacity: 0.9; }
+        .lang-switch { display: flex; gap: 6px; }
+        .lang-switch button {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.6);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .lang-switch button.active { background: white; color: #764ba2; }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-section, .preview-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .registry-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        h2, h3 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus { outline: none; border-color: #667eea; }
+
+        textarea { resize: vertical; min-height: 80px; font-family: inherit; }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #c8d8ff;
+        }
+
+        .checkbox-label input { width: 20px; height: 20px; cursor: pointer; }
+
+        .file-upload-area {
+            border: 2px dashed #ddd;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 10px;
+            background: #fcfcfc;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .file-upload-area:hover { border-color: #667eea; background: #f0f4ff; }
+
+        /* Grade de logos nos cantos / Corner logos grid */
+        .logos-config-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .corner-config-group { display: flex; flex-direction: column; gap: 10px; }
+        .corner-title { font-weight: bold; color: #333; font-size: 14px; margin-bottom: 5px; text-align: center; border-bottom: 1px solid #ddd; padding-bottom: 3px; }
+
+        .logo-box {
+            border: 1px dashed #ccc;
+            padding: 8px;
+            text-align: center;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            position: relative;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-box:hover { border-color: #667eea; background: #fcfcff; }
+        .logo-box img { max-width: 100%; max-height: 60px; object-fit: contain; }
+        .logo-placeholder-text { font-size: 11px; color: #777; }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .student-list, .topics-list {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .student-item, .topic-item {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-success:hover { background: #218838; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+        .certificate {
+            width: 1000px;
+            min-height: 600px;
+            border: 1px solid #ddd;
+            padding: 60px 80px;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+            margin: 0 auto;
+            background-color: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .certificate.verso {
+            padding: 50px 80px;
+            text-align: left;
+            justify-content: flex-start;
+            background: white !important;
+        }
+
+        /* Logos nos cantos do certificado / Certificate corner logos */
+        .corner-logo-container {
+            position: absolute;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 3;
+        }
+
+        .corner-logo-container img { max-width: 120px; max-height: 90px; object-fit: contain; }
+        .container-tl { top: 30px; left: 40px; justify-content: flex-start; }
+        .container-tr { top: 30px; right: 40px; justify-content: flex-end; }
+        .container-bl { bottom: 30px; left: 40px; justify-content: flex-start; }
+        .container-br { bottom: 30px; right: 40px; justify-content: flex-end; }
+
+        /* Tabela do verso / Back-side table */
+        .program-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 16px; }
+        .program-table th, .program-table td { border: 1px solid #333; padding: 12px; text-align: left; }
+        .program-table th { background-color: #f0f0f0; font-weight: bold; }
+        .program-table .hours-col { width: 150px; text-align: center; }
+
+        .verso-title { text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 30px; }
+        .verso-footer { margin-top: 40px; font-size: 14px; text-align: center; color: #555; }
+
+        .progress-bar { width: 100%; height: 30px; background: #f0f0f0; border-radius: 15px; overflow: hidden; margin-top: 20px; display: none; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; }
+
+        /* Tabela de registros / Registry table */
+        .registry-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        .registry-table th, .registry-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
+        .registry-table th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: 600; }
+        .registry-table tbody tr:hover { background: #eef2ff !important; }
+        .registry-table td:first-child { font-family: monospace; font-size: 13px; color: #764ba2; }
+
+        /* Conteúdo da frente / Front-side content */
+        .cert-registry { position: absolute; top: 15px; right: 40px; font-size: 13px; font-weight: bold; color: #555; z-index: 4; text-align: right;}
+        .cert-content-wrapper { position: relative; z-index: 2; margin-top: 50px; }
+        .cert-body { font-size: 18px; line-height: 1.6; margin-bottom: 10px; }
+        .cert-student { font-size: 28px; font-weight: bold; margin: 20px 0; color: #222; }
+        .cert-date { text-align: right; margin: 40px 0 20px 0; font-size: 16px; font-weight: bold;}
+        .cert-signatures { display: flex; justify-content: space-around; margin-top: 30px; align-items: flex-end; gap: 20px;}
+        .cert-signature-block { text-align: center; flex: 1; max-width: 40%; }
+        .cert-signature-line { border-top: 1px solid #000; margin-top: 5px; padding-top: 5px; font-size: 14px; }
+
+        /* Marca dos autores / Creator watermark */
+        .creator-watermark {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: #888;
+            font-family: Arial, sans-serif;
+            z-index: 5;
+            opacity: 0.8;
+        }
+
+        /* Editor com formatação / Rich-text editor */
+        .rich-toolbar { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; background: #f0f4ff; border: 2px solid #ddd; border-bottom: none; border-radius: 8px 8px 0 0; padding: 5px; }
+        .rich-toolbar button, .rich-toolbar select { border: 1px solid #c8d8ff; background: white; border-radius: 5px; padding: 4px 9px; font-size: 13px; cursor: pointer; min-width: 30px; }
+        .rich-toolbar button:hover, .rich-toolbar select:hover { border-color: #667eea; background: #eef2ff; }
+        .rich-editor { width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 0 0 8px 8px; font-size: 14px; line-height: 1.5; background: white; outline: none; }
+        .rich-editor:focus { border-color: #667eea; }
+        .rich-editor.single-line { min-height: 40px; }
+        .rich-hint { font-size: 12px; color: #888; margin-top: 4px; }
+
+        /* Miniatura centralizada da pré-visualização / Centered preview thumbnail */
+        .preview-wrapper { width: 1000px; transform: scale(0.5); transform-origin: top left; margin-left: calc(50% - 250px); margin-bottom: -290px; }
+
+        .back-settings { display: none; background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 20px; }
+
+        .app-footer { text-align: center; color: white; font-size: 13px; margin-top: 25px; opacity: 0.9; line-height: 1.6; }
+        .app-footer a { color: white; }
+
+        @media (max-width: 768px) { .main-content { grid-template-columns: 1fr; } }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div>
+                <h1>Certifica Ciência</h1>
+                <p data-i18n="subtitle"></p>
+            </div>
+            <div class="lang-switch">
+                <button type="button" id="btn-lang-pt" onclick="setLanguage('pt')">PT</button>
+                <button type="button" id="btn-lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2 data-i18n="frontConfig"></h2>
+
+                <div class="form-group">
+                    <label data-i18n="bgImage"></label>
+                    <div id="bgArea" class="file-upload-area" onclick="document.getElementById('bgInput').click()">
+                        <span data-i18n="bgClick"></span>
+                    </div>
+                    <input type="file" id="bgInput" accept="image/*" style="display: none" onchange="handleBackgroundUpload(event)">
+                    <div id="bgPreview" style="margin-top: 10px; display: none; text-align: center;">
+                        <img id="bgImgPreview" src="" style="max-width: 100%; height: 100px; object-fit: cover; border-radius: 5px; margin-bottom: 10px;">
+                        <br>
+                        <button type="button" class="remove-btn" style="padding: 5px 10px; font-size: 12px;" onclick="removeBackground()" data-i18n="bgRemove"></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="cornerLogos"></label>
+                    <div class="logos-config-grid" id="logosGrid"></div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="startRegistry"></label>
+                    <input type="number" id="startRegistry" value="100001" oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="mainText"></label>
+                    <div class="rich-toolbar">
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('certificateText','bold')" data-i18n-title="fmtBold"><b>B</b></button>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('certificateText','italic')" data-i18n-title="fmtItalic"><i>I</i></button>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('certificateText','underline')" data-i18n-title="fmtUnderline"><u>U</u></button>
+                        <select onchange="applyFontSize('certificateText', this)" data-i18n-title="fmtSize"><option value="" data-i18n="fmtSize"></option><option value="10">10 px</option><option value="12">12 px</option><option value="14">14 px</option><option value="16">16 px</option><option value="18">18 px</option><option value="20">20 px</option><option value="22">22 px</option><option value="24">24 px</option><option value="28">28 px</option><option value="32">32 px</option><option value="36">36 px</option><option value="40">40 px</option><option value="48">48 px</option></select>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('certificateText','removeFormat')" data-i18n-title="fmtClear">✕</button>
+                    </div>
+                    <div class="rich-editor" id="certificateText" contenteditable="true" oninput="this.dataset.dirty='1'; updatePreview()" onpaste="pastePlain(event)"></div>
+                    <div class="rich-hint" data-i18n="richHint"></div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="additionalText"></label>
+                    <div class="rich-toolbar">
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('additionalText','bold')" data-i18n-title="fmtBold"><b>B</b></button>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('additionalText','italic')" data-i18n-title="fmtItalic"><i>I</i></button>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('additionalText','underline')" data-i18n-title="fmtUnderline"><u>U</u></button>
+                        <select onchange="applyFontSize('additionalText', this)" data-i18n-title="fmtSize"><option value="" data-i18n="fmtSize"></option><option value="10">10 px</option><option value="12">12 px</option><option value="14">14 px</option><option value="16">16 px</option><option value="18">18 px</option><option value="20">20 px</option><option value="22">22 px</option><option value="24">24 px</option><option value="28">28 px</option><option value="32">32 px</option><option value="36">36 px</option><option value="40">40 px</option><option value="48">48 px</option></select>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('additionalText','removeFormat')" data-i18n-title="fmtClear">✕</button>
+                    </div>
+                    <div class="rich-editor" id="additionalText" contenteditable="true" oninput="this.dataset.dirty='1'; updatePreview()" onpaste="pastePlain(event)"></div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="nameSize"></label>
+                    <input type="number" id="studentFontSize" value="28" min="12" max="60" oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="placeDate"></label>
+                    <div class="rich-toolbar">
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('emissionDate','bold')" data-i18n-title="fmtBold"><b>B</b></button>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('emissionDate','italic')" data-i18n-title="fmtItalic"><i>I</i></button>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('emissionDate','underline')" data-i18n-title="fmtUnderline"><u>U</u></button>
+                        <select onchange="applyFontSize('emissionDate', this)" data-i18n-title="fmtSize"><option value="" data-i18n="fmtSize"></option><option value="10">10 px</option><option value="12">12 px</option><option value="14">14 px</option><option value="16">16 px</option><option value="18">18 px</option><option value="20">20 px</option><option value="22">22 px</option><option value="24">24 px</option><option value="28">28 px</option><option value="32">32 px</option><option value="36">36 px</option><option value="40">40 px</option><option value="48">48 px</option></select>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('emissionDate','removeFormat')" data-i18n-title="fmtClear">✕</button>
+                    </div>
+                    <div class="rich-editor single-line" id="emissionDate" contenteditable="true" oninput="this.dataset.dirty='1'; updatePreview()" onpaste="pastePlain(event)"></div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="eventName"></label>
+                    <input type="text" id="eventName" data-i18n-placeholder="eventPlaceholder">
+                </div>
+
+                <hr style="margin: 20px 0; border: 1px solid #eee;">
+
+                <h2 data-i18n="backConfig"></h2>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="enableBackSide" onchange="toggleBackSide()">
+                    <span data-i18n="enableBack"></span>
+                </label>
+
+                <div id="backSettingsArea" class="back-settings">
+                    <h3 data-i18n="programContent"></h3>
+                    <div id="topicsList" class="topics-list"></div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" id="newTopicName" data-i18n-placeholder="topicPlaceholder" style="flex: 2;">
+                        <input type="text" id="newTopicHours" data-i18n-placeholder="hoursPlaceholder" style="flex: 1;">
+                        <button type="button" class="btn-success" onclick="addTopic()" data-i18n="add"></button>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="totalHours"></label>
+                        <input type="text" id="totalHoursInput" oninput="updatePreview()">
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="backFooter"></label>
+                        <div class="rich-toolbar">
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('backFooterText','bold')" data-i18n-title="fmtBold"><b>B</b></button>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('backFooterText','italic')" data-i18n-title="fmtItalic"><i>I</i></button>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('backFooterText','underline')" data-i18n-title="fmtUnderline"><u>U</u></button>
+                        <select onchange="applyFontSize('backFooterText', this)" data-i18n-title="fmtSize"><option value="" data-i18n="fmtSize"></option><option value="10">10 px</option><option value="12">12 px</option><option value="14">14 px</option><option value="16">16 px</option><option value="18">18 px</option><option value="20">20 px</option><option value="22">22 px</option><option value="24">24 px</option><option value="28">28 px</option><option value="32">32 px</option><option value="36">36 px</option><option value="40">40 px</option><option value="48">48 px</option></select>
+                        <button type="button" onmousedown="event.preventDefault()" onclick="fmt('backFooterText','removeFormat')" data-i18n-title="fmtClear">✕</button>
+                    </div>
+                    <div class="rich-editor" id="backFooterText" contenteditable="true" oninput="this.dataset.dirty='1'; updatePreview()" onpaste="pastePlain(event)"></div>
+                    </div>
+                </div>
+
+                <hr style="margin: 20px 0; border: 1px solid #eee;">
+
+                <div class="form-group">
+                    <label data-i18n="signatures"></label>
+                    <div id="coordinatorsList"></div>
+                    <button type="button" class="btn-success" style="margin-top: 10px;" onclick="addCoordinator()" data-i18n="addSigner"></button>
+                </div>
+
+                <hr style="margin: 20px 0; border: 1px solid #eee;">
+
+                <div class="form-group">
+                    <label data-i18n="importExcel"></label>
+                    <div class="file-upload-area" onclick="document.getElementById('excelInput').click()">
+                        <span data-i18n="importClick"></span>
+                    </div>
+                    <input type="file" id="excelInput" accept=".xlsx,.xls,.csv" style="display: none" onchange="handleExcelUpload(event)">
+                </div>
+
+                <div class="form-group">
+                    <label><span data-i18n="studentList"></span> (<span id="studentCount">0</span>)</label>
+                    <div id="studentsList" class="student-list"></div>
+                </div>
+
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+
+                <button class="btn-primary" onclick="generateAllCertificates()" data-i18n="generateAll"></button>
+            </div>
+
+            <div class="preview-section">
+                <h2 data-i18n="preview"></h2>
+                <div id="previewArea"></div>
+            </div>
+        </div>
+
+        <div class="registry-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                <h2 style="border: none; margin: 0;">📋 <span data-i18n="registryTitle"></span> <span id="totalCertsCount" style="font-size:14px; color:#667eea; font-weight:normal;"></span></h2>
+                <button class="btn-success" onclick="exportRegistryToExcel()" data-i18n="exportExcel"></button>
+            </div>
+            <div style="max-height: 300px; overflow-y: auto;">
+                <table class="registry-table" id="registryTable">
+                    <thead><tr><th data-i18n="colNumber"></th><th data-i18n="colName"></th><th data-i18n="colEvent"></th><th data-i18n="colDate"></th></tr></thead>
+                    <tbody id="registryTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <span data-i18n="footerGroup"></span><br>
+            <span data-i18n="footerAuthors"></span> · <span data-i18n="footerLicense"></span>
+        </footer>
+    </div>
+
+    <script>
+        // =====================================================================
+        // Internacionalização / Internationalization (PT-BR | EN)
+        // =====================================================================
+        const I18N = {
+            pt: {
+                subtitle: 'Gerador de certificados em lote — Grupo de Pesquisa Inteligência Artificial no Cerrado (PGAC/UEMS)',
+                frontConfig: 'Configuração da Frente',
+                bgImage: 'Imagem de Plano de Fundo (Frente)',
+                bgClick: '🖼️ Clique para adicionar imagem de fundo',
+                bgRemove: 'Remover Fundo',
+                cornerLogos: 'Logos nos Cantos (até 2 por canto)',
+                cornerTL: 'Sup. Esquerdo', cornerTR: 'Sup. Direito', cornerBL: 'Inf. Esquerdo', cornerBR: 'Inf. Direito',
+                logo1: 'Logo 1', logo2: 'Logo 2 (opcional)',
+                startRegistry: 'Número Inicial de Registro',
+                fmtBold: 'Negrito', fmtItalic: 'Itálico', fmtUnderline: 'Sublinhado', fmtSize: 'Tamanho', fmtClear: 'Limpar formatação',
+                richHint: 'Selecione um trecho e use os botões para aplicar negrito, itálico, sublinhado ou mudar o tamanho da fonte.',
+                nameSize: 'Tamanho da Fonte do Nome do Participante (px)',
+                mainText: 'Texto Principal',
+                additionalText: 'Texto Adicional',
+                placeDate: 'Local e Data',
+                eventName: 'Nome do Evento / Curso',
+                eventPlaceholder: 'Ex.: Curso de Extensão em Inteligência Artificial na Agricultura',
+                backConfig: 'Configuração do Verso (Opcional)',
+                enableBack: 'Gerar Página de Verso (Conteúdo Programático)',
+                programContent: 'Conteúdo Programático',
+                topicPlaceholder: 'Nome do Tópico/Módulo',
+                hoursPlaceholder: 'Horas (ex.: 4 h)',
+                add: 'Adicionar',
+                totalHours: 'Carga Horária Total (Rodapé da Tabela)',
+                backFooter: 'Texto de Rodapé do Verso',
+                signatures: 'Assinaturas (apenas na frente)',
+                addSigner: '+ Adicionar Assinante',
+                signer: 'Assinante',
+                remove: 'Remover',
+                signerName: 'Nome (Ex.: Prof. Dr. João da Silva)',
+                signerRole: 'Cargo (Ex.: Coordenador do Curso)',
+                signatureClick: '✍️ Clique para adicionar a imagem da assinatura',
+                importExcel: 'Importar Participantes do Excel',
+                importClick: '📊 Clique para importar planilha (coluna "NOME")',
+                studentList: 'Lista de Participantes',
+                generateAll: 'Gerar Todos os Certificados (PDF)',
+                preview: 'Pré-visualização',
+                front: 'FRENTE', back: 'VERSO',
+                registryTitle: 'Tabela de Certificados Gerados',
+                exportExcel: '📥 Exportar para Excel',
+                colNumber: 'Número do Certificado', colName: 'Nome', colEvent: 'Evento', colDate: 'Data de Emissão',
+                noCertificates: 'Nenhum certificado gerado ainda.',
+                certCount: 'certificado(s)',
+                noTopics: 'Nenhum tópico adicionado.',
+                noContent: 'Nenhum conteúdo especificado.',
+                registryNumber: 'Número de Registro',
+                topicHeader: 'Tópico / Módulo do Curso',
+                hoursHeader: 'Carga Horária',
+                totalRow: 'Total Geral',
+                defaultName: 'Nome', defaultRole: 'Cargo',
+                samplePerson: 'Participante de Exemplo',
+                alertTopic: 'Digite o nome do tópico.',
+                alertNoStudents: 'Adicione participantes primeiro!',
+                alertDone: 'Certificados gerados com sucesso!',
+                alertGenerateFirst: 'Gere os certificados primeiro.',
+                filePrefix: 'certificado',
+                registryFile: 'Tabela_Registros.xlsx',
+                registrySheet: 'Registros',
+                watermark: 'Grupo de Pesquisa Inteligência Artificial no Cerrado (PGAC/UEMS) — Coordenador: Prof. Dr. Renato Lustosa Sobrinho',
+                footerGroup: 'Grupo de Pesquisa Inteligência Artificial no Cerrado — Programa de Pós-Graduação em Agronomia (PGAC), Universidade Estadual de Mato Grosso do Sul (UEMS)',
+                footerAuthors: 'Autores: Renato Lustosa Sobrinho, Tiago Zoz, Edson de Lima Bobadilha, Elen Cristina Fernandes Rosa, Edilson Costa, Gustavo Haralampidou da Costa Vieira, Cássio de Castro Seron, Murilo Battistuzzi Martins, Carlos Eduardo da Silva Oliveira, Vitor Augusto Neves, Levi Alves Barboza Junior e Bruno Rodrigues de Oliveira',
+                footerLicense: 'Software livre sob licença MIT',
+                // Valores padrão dos campos / Default field values
+                defCertificateText: 'Certificamos que',
+                defAdditionalText: 'participou do curso de extensão, perfazendo a carga horária total exigida.',
+                defEmissionDate: 'Cassilândia, MS, 23 de outubro de 2026.',
+                defTotalHours: '40 horas',
+                defBackFooter: 'Certificado registrado sob o livro nº 01, folha 23, na data de sua emissão.'
+            },
+            en: {
+                subtitle: 'Batch certificate generator — Artificial Intelligence in the Cerrado Research Group (PGAC/UEMS)',
+                frontConfig: 'Front Side Settings',
+                bgImage: 'Background Image (Front)',
+                bgClick: '🖼️ Click to add a background image',
+                bgRemove: 'Remove Background',
+                cornerLogos: 'Corner Logos (up to 2 per corner)',
+                cornerTL: 'Top Left', cornerTR: 'Top Right', cornerBL: 'Bottom Left', cornerBR: 'Bottom Right',
+                logo1: 'Logo 1', logo2: 'Logo 2 (optional)',
+                startRegistry: 'Starting Registration Number',
+                fmtBold: 'Bold', fmtItalic: 'Italic', fmtUnderline: 'Underline', fmtSize: 'Size', fmtClear: 'Clear formatting',
+                richHint: 'Select part of the text and use the buttons to apply bold, italic, underline or change the font size.',
+                nameSize: 'Participant Name Font Size (px)',
+                mainText: 'Main Text',
+                additionalText: 'Additional Text',
+                placeDate: 'Place and Date',
+                eventName: 'Event / Course Name',
+                eventPlaceholder: 'E.g., Extension Course on Artificial Intelligence in Agriculture',
+                backConfig: 'Back Side Settings (Optional)',
+                enableBack: 'Generate Back Page (Course Syllabus)',
+                programContent: 'Course Syllabus',
+                topicPlaceholder: 'Topic/Module Name',
+                hoursPlaceholder: 'Hours (e.g., 4 h)',
+                add: 'Add',
+                totalHours: 'Total Workload (Table Footer)',
+                backFooter: 'Back Page Footer Text',
+                signatures: 'Signatures (front side only)',
+                addSigner: '+ Add Signatory',
+                signer: 'Signatory',
+                remove: 'Remove',
+                signerName: 'Name (E.g., Prof. Dr. John Smith)',
+                signerRole: 'Position (E.g., Course Coordinator)',
+                signatureClick: '✍️ Click to add the signature image',
+                importExcel: 'Import Participants from Excel',
+                importClick: '📊 Click to import a spreadsheet ("NAME" or "NOME" column)',
+                studentList: 'Participant List',
+                generateAll: 'Generate All Certificates (PDF)',
+                preview: 'Preview',
+                front: 'FRONT', back: 'BACK',
+                registryTitle: 'Generated Certificates Registry',
+                exportExcel: '📥 Export to Excel',
+                colNumber: 'Certificate Number', colName: 'Name', colEvent: 'Event', colDate: 'Issue Date',
+                noCertificates: 'No certificates generated yet.',
+                certCount: 'certificate(s)',
+                noTopics: 'No topics added.',
+                noContent: 'No content specified.',
+                registryNumber: 'Registration Number',
+                topicHeader: 'Course Topic / Module',
+                hoursHeader: 'Workload',
+                totalRow: 'Grand Total',
+                defaultName: 'Name', defaultRole: 'Position',
+                samplePerson: 'Sample Participant',
+                alertTopic: 'Please enter the topic name.',
+                alertNoStudents: 'Please add participants first!',
+                alertDone: 'Certificates generated successfully!',
+                alertGenerateFirst: 'Please generate the certificates first.',
+                filePrefix: 'certificate',
+                registryFile: 'Certificate_Registry.xlsx',
+                registrySheet: 'Registry',
+                watermark: 'Artificial Intelligence in the Cerrado Research Group (PGAC/UEMS) — Coordinator: Prof. Dr. Renato Lustosa Sobrinho',
+                footerGroup: 'Artificial Intelligence in the Cerrado Research Group — Graduate Program in Agronomy (PGAC), State University of Mato Grosso do Sul (UEMS), Brazil',
+                footerAuthors: 'Authors: Renato Lustosa Sobrinho, Tiago Zoz, Edson de Lima Bobadilha, Elen Cristina Fernandes Rosa, Edilson Costa, Gustavo Haralampidou da Costa Vieira, Cássio de Castro Seron, Murilo Battistuzzi Martins, Carlos Eduardo da Silva Oliveira, Vitor Augusto Neves, Levi Alves Barboza Junior and Bruno Rodrigues de Oliveira',
+                footerLicense: 'Free software under the MIT License',
+                defCertificateText: 'This is to certify that',
+                defAdditionalText: 'attended the extension course, completing the full required workload.',
+                defEmissionDate: 'Cassilândia, MS, Brazil, October 23, 2026.',
+                defTotalHours: '40 hours',
+                defBackFooter: 'Certificate recorded in Book No. 01, page 23, on its date of issue.'
+            }
+        };
+
+        // Campos cujo valor padrão muda com o idioma (só se o usuário não os editou)
+        // Fields whose default value follows the language (only if not edited by the user)
+        const DEFAULT_FIELDS = {
+            certificateText: 'defCertificateText',
+            additionalText: 'defAdditionalText',
+            emissionDate: 'defEmissionDate',
+            totalHoursInput: 'defTotalHours',
+            backFooterText: 'defBackFooter'
+        };
+
+        let currentLang = 'pt';
+        function t(key) { return I18N[currentLang][key] ?? key; }
+
+        function setLanguage(lang) {
+            const previous = currentLang;
+            currentLang = lang;
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+            document.getElementById('btn-lang-pt').classList.toggle('active', lang === 'pt');
+            document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+            document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
+
+            for (const [id, key] of Object.entries(DEFAULT_FIELDS)) {
+                const el = document.getElementById(id);
+                if (el.isContentEditable) {
+                    // Só troca o texto padrão se o usuário não editou / Replace default only if untouched
+                    if (!el.dataset.dirty || el.textContent.trim() === '') { el.innerHTML = esc(t(key)); delete el.dataset.dirty; }
+                } else if (el.value === '' || el.value === I18N[previous][key]) {
+                    el.value = t(key);
+                }
+            }
+
+            try { localStorage.setItem('certificaCienciaLang', lang); } catch (e) {}
+
+            renderLogosGrid();
+            renderTopics();
+            renderCoordinators();
+            renderStudentsList();
+            renderRegistryTable();
+            updatePreview();
+        }
+
+        // =====================================================================
+        // Estado / State
+        // =====================================================================
+        let backgroundImage = null;
+        let logosState = { tl: [null, null], tr: [null, null], bl: [null, null], br: [null, null] };
+        let students = [];
+        let coordinators = [];
+        let topics = [];
+        let generatedRecords = [];
+
+        // Escapa texto inserido em HTML / Escapes text inserted into HTML
+        function esc(s) {
+            return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        // =====================================================================
+        // Formatação de texto / Text formatting
+        // =====================================================================
+        const savedRanges = {};
+
+        // Guarda a seleção de cada editor (necessário para o menu de tamanho)
+        // Keeps each editor's selection (needed for the size menu)
+        document.addEventListener('selectionchange', () => {
+            const sel = window.getSelection();
+            if (!sel.rangeCount) return;
+            const node = sel.anchorNode;
+            const editor = node && (node.nodeType === 1 ? node : node.parentElement)?.closest('.rich-editor');
+            if (editor) savedRanges[editor.id] = sel.getRangeAt(0).cloneRange();
+        });
+
+        function restoreSelection(id) {
+            const editor = document.getElementById(id);
+            editor.focus();
+            const range = savedRanges[id];
+            if (range && editor.contains(range.commonAncestorContainer)) {
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                return !range.collapsed;
+            }
+            return false;
+        }
+
+        function fmt(id, command) {
+            restoreSelection(id);
+            document.execCommand('styleWithCSS', false, false);
+            document.execCommand(command, false, null);
+            const editor = document.getElementById(id);
+            editor.dataset.dirty = '1';
+            updatePreview();
+        }
+
+        function applyFontSize(id, select) {
+            const px = select.value;
+            select.value = '';
+            if (!px) return;
+            if (!restoreSelection(id)) { alert(t('richHint')); return; }
+            const editor = document.getElementById(id);
+            document.execCommand('styleWithCSS', false, false);
+            document.execCommand('fontSize', false, '7');
+            // Converte <font size=7> em <span style="font-size:Npx"> / Converts <font size=7> into px spans
+            editor.querySelectorAll('font[size="7"]').forEach(f => {
+                const span = document.createElement('span');
+                span.style.fontSize = px + 'px';
+                while (f.firstChild) span.appendChild(f.firstChild);
+                f.replaceWith(span);
+            });
+            editor.querySelectorAll('span').forEach(sp => {
+                if (sp.style.fontSize === 'xxx-large' || sp.style.fontSize === '-webkit-xxx-large') sp.style.fontSize = px + 'px';
+            });
+            editor.dataset.dirty = '1';
+            updatePreview();
+        }
+
+        // Cola sempre como texto simples / Always paste as plain text
+        function pastePlain(event) {
+            event.preventDefault();
+            const text = (event.clipboardData || window.clipboardData).getData('text/plain');
+            document.execCommand('insertText', false, text);
+        }
+
+        // Mantém apenas a formatação permitida / Keeps only the allowed formatting
+        function sanitizeRich(root) {
+            const ALLOWED = { B: 1, STRONG: 1, I: 1, EM: 1, U: 1, BR: 1, SPAN: 1, DIV: 1, P: 1 };
+            const clean = node => {
+                let out = '';
+                node.childNodes.forEach(ch => {
+                    if (ch.nodeType === 3) { out += esc(ch.textContent); return; }
+                    if (ch.nodeType !== 1) return;
+                    const tag = ch.tagName === 'FONT' ? 'SPAN' : ch.tagName;
+                    const inner = clean(ch);
+                    if (!ALLOWED[tag]) { out += inner; return; }
+                    if (tag === 'BR') { out += '<br>'; return; }
+                    let style = '';
+                    const st = ch.style || {};
+                    if (st.fontSize && /^\d+(\.\d+)?px$/.test(st.fontSize)) style += `font-size:${st.fontSize};`;
+                    if (st.fontWeight) style += `font-weight:${st.fontWeight === 'normal' || st.fontWeight === '400' ? 'normal' : 'bold'};`;
+                    if (st.fontStyle) style += `font-style:${st.fontStyle === 'italic' ? 'italic' : 'normal'};`;
+                    if (st.textDecoration && st.textDecoration.includes('underline')) style += 'text-decoration:underline;';
+                    const t2 = tag.toLowerCase();
+                    out += `<${t2}${style ? ` style="${style}"` : ''}>${inner}</${t2}>`;
+                });
+                return out;
+            };
+            return clean(root);
+        }
+
+        function richHtml(id) { return sanitizeRich(document.getElementById(id)); }
+        function richText(id) { return document.getElementById(id).innerText.trim(); }
+
+        // =====================================================================
+        // Plano de fundo / Background
+        // =====================================================================
+        function handleBackgroundUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                backgroundImage = e.target.result;
+                document.getElementById('bgImgPreview').src = backgroundImage;
+                document.getElementById('bgPreview').style.display = 'block';
+                document.getElementById('bgArea').style.display = 'none';
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeBackground() {
+            backgroundImage = null;
+            document.getElementById('bgInput').value = '';
+            document.getElementById('bgPreview').style.display = 'none';
+            document.getElementById('bgArea').style.display = 'flex';
+            updatePreview();
+        }
+
+        // =====================================================================
+        // Logos nos cantos / Corner logos
+        // =====================================================================
+        function renderLogosGrid() {
+            const corners = [['tl', 'cornerTL'], ['tr', 'cornerTR'], ['bl', 'cornerBL'], ['br', 'cornerBR']];
+            document.getElementById('logosGrid').innerHTML = corners.map(([pos, labelKey]) => `
+                <div class="corner-config-group">
+                    <div class="corner-title">${t(labelKey)}</div>
+                    ${[0, 1].map(i => {
+                        const img = logosState[pos][i];
+                        return `
+                        <div class="logo-box" onclick="document.getElementById('logo-${pos}-${i}').click()">
+                            ${img ? `<img src="${img}">` : `<span class="logo-placeholder-text">${t(i === 0 ? 'logo1' : 'logo2')}</span>`}
+                            <input type="file" id="logo-${pos}-${i}" accept="image/*" style="display:none;" onclick="event.stopPropagation()" onchange="uploadCornerLogo(event, '${pos}', ${i})">
+                            ${img ? `<button type="button" class="remove-btn" style="margin-top:3px;" onclick="event.stopPropagation(); removeCornerLogo('${pos}', ${i})">X</button>` : ''}
+                        </div>`;
+                    }).join('')}
+                </div>
+            `).join('');
+        }
+
+        function uploadCornerLogo(event, position, index) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                logosState[position][index] = e.target.result;
+                renderLogosGrid();
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeCornerLogo(position, index) {
+            logosState[position][index] = null;
+            renderLogosGrid();
+            updatePreview();
+        }
+
+        // =====================================================================
+        // Verso e conteúdo programático / Back side and syllabus
+        // =====================================================================
+        function toggleBackSide() {
+            const isChecked = document.getElementById('enableBackSide').checked;
+            document.getElementById('backSettingsArea').style.display = isChecked ? 'block' : 'none';
+            updatePreview();
+        }
+
+        function addTopic() {
+            const nameInput = document.getElementById('newTopicName');
+            const hoursInput = document.getElementById('newTopicHours');
+            if (nameInput.value.trim() === '') { alert(t('alertTopic')); return; }
+            topics.push({ id: Date.now(), name: nameInput.value, hours: hoursInput.value || '-' });
+            nameInput.value = ''; hoursInput.value = '';
+            renderTopics();
+            updatePreview();
+        }
+
+        function removeTopic(id) {
+            topics = topics.filter(tp => tp.id !== id);
+            renderTopics(); updatePreview();
+        }
+
+        function renderTopics() {
+            const container = document.getElementById('topicsList');
+            if (topics.length === 0) {
+                container.innerHTML = `<span style="color:#999">${t('noTopics')}</span>`;
+                return;
+            }
+            container.innerHTML = topics.map(tp => `
+                <div class="topic-item">
+                    <span style="flex:2"><strong>${esc(tp.name)}</strong></span>
+                    <span style="flex:1; text-align:center">${esc(tp.hours)}</span>
+                    <button class="remove-btn" style="padding: 5px 10px;" onclick="removeTopic(${tp.id})">X</button>
+                </div>
+            `).join('');
+        }
+
+        // =====================================================================
+        // Assinaturas / Signatures
+        // =====================================================================
+        function addCoordinator() {
+            coordinators.push({ id: Date.now(), name: '', role: '', signature: null });
+            renderCoordinators(); updatePreview();
+        }
+
+        function removeCoordinator(id) {
+            coordinators = coordinators.filter(c => c.id !== id);
+            renderCoordinators(); updatePreview();
+        }
+
+        function uploadSignature(index, event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                coordinators[index].signature = e.target.result;
+                renderCoordinators();
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderCoordinators() {
+            const container = document.getElementById('coordinatorsList');
+            container.innerHTML = coordinators.map((coord, index) => `
+                <div style="background:#f8f9fa; padding:15px; margin-bottom:15px; border-radius:8px; border: 1px solid #ddd;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <strong>${t('signer')} ${index + 1}</strong>
+                        <button class="remove-btn" style="padding: 5px 10px;" onclick="removeCoordinator(${coord.id})">${t('remove')}</button>
+                    </div>
+
+                    <input type="text" placeholder="${esc(t('signerName'))}" value="${esc(coord.name)}" oninput="coordinators[${index}].name=this.value; updatePreview()" style="margin-bottom:10px;">
+                    <input type="text" placeholder="${esc(t('signerRole'))}" value="${esc(coord.role)}" oninput="coordinators[${index}].role=this.value; updatePreview()" style="margin-bottom:10px;">
+
+                    <div class="file-upload-area" style="padding: 10px; min-height: 80px;" onclick="document.getElementById('signatureInput_${coord.id}').click()">
+                        ${coord.signature ? `<img src="${coord.signature}" style="max-height: 60px; object-fit: contain;">` : t('signatureClick')}
+                    </div>
+                    <input type="file" id="signatureInput_${coord.id}" accept="image/*" style="display: none" onchange="uploadSignature(${index}, event)">
+                </div>
+            `).join('');
+        }
+
+        // =====================================================================
+        // Importação da planilha / Spreadsheet import
+        // =====================================================================
+        function handleExcelUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                students = [];
+                jsonData.forEach(row => {
+                    const name = row['NOME'] || row['NAME'] || row['ALUNO'] || row['STUDENT'] || Object.values(row)[0];
+                    if (name && String(name).trim()) students.push({ id: Date.now() + Math.random(), name: String(name).trim() });
+                });
+                event.target.value = '';
+                renderStudentsList(); updatePreview();
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function renderStudentsList() {
+            document.getElementById('studentCount').textContent = students.length;
+            const container = document.getElementById('studentsList');
+            container.innerHTML = students.map(s => `
+                <div class="student-item"><span>${esc(s.name)}</span><button class="remove-btn" style="padding: 5px 10px;" onclick="removeStudent('${s.id}')">${t('remove')}</button></div>
+            `).join('');
+        }
+
+        function removeStudent(id) { students = students.filter(s => s.id != id); renderStudentsList(); updatePreview(); }
+
+        // =====================================================================
+        // Montagem do certificado / Certificate layout
+        // =====================================================================
+        function createFrontHtml(studentName, registryNumber) {
+            const text = richHtml('certificateText');
+            const addText = richHtml('additionalText');
+            const date = richHtml('emissionDate');
+            const nameSize = Math.min(Math.max(parseInt(document.getElementById('studentFontSize').value) || 28, 8), 80);
+
+            const coordsHtml = coordinators.map(c => `
+                <div class="cert-signature-block">
+                    <div style="height: 70px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 5px;">
+                        ${c.signature ? `<img src="${c.signature}" style="max-height: 65px; max-width: 100%; object-fit: contain;">` : ''}
+                    </div>
+                    <div class="cert-signature-line">
+                        <strong>${esc(c.name) || t('defaultName')}</strong><br><span>${esc(c.role) || t('defaultRole')}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            const bgStyle = backgroundImage ? `background-image: url('${backgroundImage}'); background-size: cover; background-position: center; background-repeat: no-repeat;` : 'background: white;';
+            const cornerHtml = pos => logosState[pos].map(img => img ? `<img src="${img}">` : '').join('');
+
+            return `
+                <div class="certificate" id="certFront" style="${bgStyle}">
+                    <div class="corner-logo-container container-tl">${cornerHtml('tl')}</div>
+                    <div class="corner-logo-container container-tr">${cornerHtml('tr')}</div>
+                    <div class="corner-logo-container container-bl">${cornerHtml('bl')}</div>
+                    <div class="corner-logo-container container-br">${cornerHtml('br')}</div>
+
+                    <div class="cert-registry">${t('registryNumber')}: ${esc(registryNumber)}</div>
+
+                    <div class="cert-content-wrapper">
+                        <div class="cert-body">${text}</div>
+                        <div class="cert-student" style="font-size: ${nameSize}px;">${esc(studentName)}</div>
+                        <div class="cert-body">${addText}</div>
+                        <div class="cert-date">${date}</div>
+                        <div class="cert-signatures">${coordsHtml}</div>
+                    </div>
+
+                    <div class="creator-watermark">${t('watermark')}</div>
+                </div>
+            `;
+        }
+
+        function createBackHtml(studentName, registryNumber) {
+            const totalHours = esc(document.getElementById('totalHoursInput').value);
+            const footerText = richHtml('backFooterText');
+            const tableRows = topics.map(tp => `<tr><td>${esc(tp.name)}</td><td class="hours-col">${esc(tp.hours)}</td></tr>`).join('');
+
+            return `
+                <div class="certificate verso" id="certBack">
+                    <div class="cert-registry">${t('registryNumber')}: ${esc(registryNumber)} | ${esc(studentName)}</div>
+                    <div class="verso-title">${t('programContent')}</div>
+
+                    <table class="program-table">
+                        <thead><tr><th>${t('topicHeader')}</th><th class="hours-col">${t('hoursHeader')}</th></tr></thead>
+                        <tbody>${tableRows || `<tr><td>${t('noContent')}</td><td>-</td></tr>`}</tbody>
+                        <tfoot><tr><th>${t('totalRow')}</th><th class="hours-col">${totalHours}</th></tr></tfoot>
+                    </table>
+
+                    <div class="verso-footer">${footerText}</div>
+                </div>
+            `;
+        }
+
+        function updatePreview() {
+            const area = document.getElementById('previewArea');
+            const previewName = students.length > 0 ? students[0].name : t('samplePerson');
+            const reg = document.getElementById('startRegistry').value || '100001';
+            const showBack = document.getElementById('enableBackSide').checked;
+
+            let html = `
+                <div class="preview-wrapper">
+                    <div style="text-align: center; color: #666; margin-bottom: 5px; font-weight: bold;">${t('front')}</div>
+                    ${createFrontHtml(previewName, reg)}
+                </div>
+            `;
+
+            if (showBack) {
+                html += `
+                <div class="preview-wrapper" style="margin-top: 20px;">
+                    <div style="text-align: center; color: #666; margin-bottom: 5px; font-weight: bold;">${t('back')}</div>
+                    ${createBackHtml(previewName, reg)}
+                </div>
+                `;
+            }
+
+            area.innerHTML = html;
+        }
+
+        // =====================================================================
+        // Geração dos PDFs / PDF generation
+        // =====================================================================
+        async function generateAllCertificates() {
+            if (students.length === 0) return alert(t('alertNoStudents'));
+
+            const showBack = document.getElementById('enableBackSide').checked;
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
+            progressBar.style.display = 'block';
+
+            const { jsPDF } = window.jspdf;
+            let currentRegistry = parseInt(document.getElementById('startRegistry').value) || 100001;
+            const date = richText('emissionDate');
+
+            generatedRecords = [];
+            const eventName = document.getElementById('eventName').value.trim() || '—';
+
+            for (let i = 0; i < students.length; i++) {
+                progressFill.style.width = `${((i + 1) / students.length) * 100}%`;
+                progressFill.textContent = `${Math.round(((i + 1) / students.length) * 100)}%`;
+
+                const student = students[i];
+                const regStr = currentRegistry.toString();
+                generatedRecords.push({ number: regStr, name: student.name, event: eventName, date: date });
+
+                const tempDiv = document.createElement('div');
+                tempDiv.style.position = 'absolute';
+                tempDiv.style.left = '-9999px';
+                tempDiv.innerHTML = createFrontHtml(student.name, regStr) + (showBack ? createBackHtml(student.name, regStr) : '');
+                document.body.appendChild(tempDiv);
+
+                try {
+                    const frontEl = tempDiv.querySelector('#certFront');
+                    const canvasFront = await html2canvas(frontEl, { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' });
+
+                    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+                    const imgW = 297, imgH = (canvasFront.height * imgW) / canvasFront.width;
+                    pdf.addImage(canvasFront.toDataURL('image/jpeg', 0.95), 'JPEG', 0, (210 - imgH) / 2, imgW, imgH);
+
+                    if (showBack) {
+                        const backEl = tempDiv.querySelector('#certBack');
+                        const canvasBack = await html2canvas(backEl, { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' });
+                        pdf.addPage();
+                        const bImgH = (canvasBack.height * imgW) / canvasBack.width;
+                        pdf.addImage(canvasBack.toDataURL('image/jpeg', 0.95), 'JPEG', 0, (210 - bImgH) / 2, imgW, bImgH);
+                    }
+
+                    pdf.save(`${t('filePrefix')}_${regStr}_${student.name.replace(/\s+/g, '_')}.pdf`);
+                    await new Promise(r => setTimeout(r, 300));
+                } catch (e) { console.error('Erro / Error', e); }
+
+                document.body.removeChild(tempDiv);
+                currentRegistry++;
+            }
+
+            progressBar.style.display = 'none';
+            document.getElementById('startRegistry').value = currentRegistry;
+            renderRegistryTable();
+            alert(t('alertDone'));
+        }
+
+        // =====================================================================
+        // Tabela de registros / Registry table
+        // =====================================================================
+        function renderRegistryTable() {
+            const body = document.getElementById('registryTableBody');
+            const countEl = document.getElementById('totalCertsCount');
+            if (generatedRecords.length === 0) {
+                countEl.textContent = '';
+                body.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #999;">${t('noCertificates')}</td></tr>`;
+                return;
+            }
+            countEl.textContent = `— ${generatedRecords.length} ${t('certCount')}`;
+            body.innerHTML = generatedRecords.map((r, i) => `
+                <tr style="background: ${i % 2 === 0 ? '#fff' : '#f8f9fa'};">
+                    <td><strong>${esc(r.number)}</strong></td>
+                    <td>${esc(r.name)}</td>
+                    <td>${esc(r.event)}</td>
+                    <td>${esc(r.date)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function exportRegistryToExcel() {
+            if (generatedRecords.length === 0) return alert(t('alertGenerateFirst'));
+            const rows = generatedRecords.map(r => ({
+                [t('colNumber')]: r.number, [t('colName')]: r.name, [t('colEvent')]: r.event, [t('colDate')]: r.date
+            }));
+            const ws = XLSX.utils.json_to_sheet(rows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, t('registrySheet'));
+            XLSX.writeFile(wb, t('registryFile'));
+        }
+
+        // =====================================================================
+        // Inicialização / Startup
+        // =====================================================================
+        (function init() {
+            let lang = 'pt';
+            try {
+                const saved = localStorage.getItem('certificaCienciaLang');
+                if (saved === 'pt' || saved === 'en') lang = saved;
+                else if (!(navigator.language || 'pt').toLowerCase().startsWith('pt')) lang = 'en';
+            } catch (e) {}
+            const params = new URLSearchParams(location.search);
+            if (params.get('lang') === 'en' || params.get('lang') === 'pt') lang = params.get('lang');
+
+            // Assinantes de exemplo (editáveis) / Sample signatories (editable)
+            coordinators.push({ id: 1, name: '', role: '', signature: null });
+            coordinators.push({ id: 2, name: '', role: '', signature: null });
+
+            currentLang = lang;
+            setLanguage(lang);
+        })();
+    </script>
+</body>
+</html>
