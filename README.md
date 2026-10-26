@@ -225,6 +225,8 @@ As bibliotecas de terceiros utilizadas mantêm suas próprias licenças: [html2c
 - Vitor Augusto Neves
 - Levi Alves Barboza Junior
 - Bruno Rodrigues de Oliveira (UNESP) — [ORCID 0000-0002-1037-6541](https://orcid.org/0000-0002-1037-6541)
+- Bruno Aparecido Fronk
+- Thiago Martins dos Santos
 
 **Grupo de Pesquisa:** [Inteligência Artificial no Cerrado — DGP/CNPq](http://dgp.cnpq.br/dgp/espelhogrupo/2871755427518068)
 **Contato:** renatolustosa@uems.br

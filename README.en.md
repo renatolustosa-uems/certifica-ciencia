@@ -194,7 +194,7 @@ certifica-ciencia/
 
 ## 9. How to cite
 
-Lustosa Sobrinho, R., Zoz, T., Bobadilha, E. L., Rosa, E. C. F., Costa, E., Vieira, G. H. C., Seron, C. C., Martins, M. B., Oliveira, C. E. S., Neves, V. A., Barboza Junior, L. A., & Oliveira, B. R. (2026). *Certifica Ciência: a bilingual batch certificate generator* (Version 1.1.0) [Computer software]. Artificial Intelligence in the Cerrado Research Group, PGAC/UEMS. https://doi.org/10.5281/zenodo.XXXXXXX
+Lustosa Sobrinho, R., Zoz, T., Bobadilha, E. L., Rosa, E. C. F., Costa, E., Vieira, G. H. C., Seron, C. C., Martins, M. B., Oliveira, C. E. S., Neves, V. A., Barboza Junior, L. A., Oliveira, B. R., Fronk, B. A., & Santos, T. M. (2026). *Certifica Ciência: a bilingual batch certificate generator* (Version 1.1.0) [Computer software]. Artificial Intelligence in the Cerrado Research Group, PGAC/UEMS. https://doi.org/10.5281/zenodo.XXXXXXX
 
 > The DOI will be assigned by Zenodo once the first release is published on GitHub.
 
@@ -220,6 +220,8 @@ Third-party libraries keep their own licences: [html2canvas](https://html2canvas
 - Vitor Augusto Neves
 - Levi Alves Barboza Junior
 - Bruno Rodrigues de Oliveira (UNESP) — [ORCID 0000-0002-1037-6541](https://orcid.org/0000-0002-1037-6541)
+- Bruno Aparecido Fronk
+- Thiago Martins dos Santos
 
 **Research group:** [Artificial Intelligence in the Cerrado — CNPq Research Groups Directory](http://dgp.cnpq.br/dgp/espelhogrupo/2871755427518068)
 **Contact:** renatolustosa@uems.br
