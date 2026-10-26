@@ -82,7 +82,12 @@ authors:
     given-names: "Bruno Aparecido"
   - family-names: "Santos"
     given-names: "Thiago Martins dos"
+  - family-names: "Binotti"
+    given-names: "Flávio Ferreira da Silva"
+    orcid: "https://orcid.org/0000-0002-2248-8954"
+    affiliation: "Universidade Estadual de Mato Grosso do Sul (UEMS)"
 version: "1.1.0"
+doi: "10.5281/zenodo.23666854"
 date-released: "2026-10-26"
 license: MIT
 repository-code: "https://github.com/renatolustosa-uems/certifica-ciencia"

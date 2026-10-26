@@ -1,5 +1,7 @@
 # Certifica Ciência
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23666854.svg)](https://doi.org/10.5281/zenodo.23666854)
+
 **Gerador de certificados em lote, bilíngue (português/inglês), que funciona inteiramente no navegador.**
 
 🇧🇷 Português · [🇬🇧 English](README.en.md)
@@ -199,9 +201,8 @@ certifica-ciencia/
 
 ## 9. Como citar
 
-LUSTOSA SOBRINHO, R. et al. **Certifica Ciência**: gerador de certificados em lote bilíngue. Versão 1.1.0. Cassilândia: Grupo de Pesquisa Inteligência Artificial no Cerrado, PGAC/UEMS, 2026. Software. DOI: 10.5281/zenodo.XXXXXXX.
+LUSTOSA SOBRINHO, R. et al. **Certifica Ciência**: gerador de certificados em lote bilíngue. Versão 1.1.0. Cassilândia: Grupo de Pesquisa Inteligência Artificial no Cerrado, PGAC/UEMS, 2026. Software. DOI: 10.5281/zenodo.23666854.
 
-> O DOI será atribuído pelo Zenodo após a publicação da primeira versão (*release*) no GitHub.
 
 ## 10. Licença
 
@@ -227,6 +228,7 @@ As bibliotecas de terceiros utilizadas mantêm suas próprias licenças: [html2c
 - Bruno Rodrigues de Oliveira (UNESP) — [ORCID 0000-0002-1037-6541](https://orcid.org/0000-0002-1037-6541)
 - Bruno Aparecido Fronk
 - Thiago Martins dos Santos
+- Flávio Ferreira da Silva Binotti — [ORCID 0000-0002-2248-8954](https://orcid.org/0000-0002-2248-8954)
 
 **Grupo de Pesquisa:** [Inteligência Artificial no Cerrado — DGP/CNPq](http://dgp.cnpq.br/dgp/espelhogrupo/2871755427518068)
 **Contato:** renatolustosa@uems.br

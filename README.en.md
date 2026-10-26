@@ -1,5 +1,7 @@
 # Certifica Ciência
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23666854.svg)](https://doi.org/10.5281/zenodo.23666854)
+
 **A bilingual (Portuguese/English) batch certificate generator that runs entirely in the web browser.**
 
 [🇧🇷 Português](README.md) · 🇬🇧 English
@@ -194,9 +196,8 @@ certifica-ciencia/
 
 ## 9. How to cite
 
-Lustosa Sobrinho, R., Zoz, T., Bobadilha, E. L., Rosa, E. C. F., Costa, E., Vieira, G. H. C., Seron, C. C., Martins, M. B., Oliveira, C. E. S., Neves, V. A., Barboza Junior, L. A., Oliveira, B. R., Fronk, B. A., & Santos, T. M. (2026). *Certifica Ciência: a bilingual batch certificate generator* (Version 1.1.0) [Computer software]. Artificial Intelligence in the Cerrado Research Group, PGAC/UEMS. https://doi.org/10.5281/zenodo.XXXXXXX
+Lustosa Sobrinho, R., Zoz, T., Bobadilha, E. L., Rosa, E. C. F., Costa, E., Vieira, G. H. C., Seron, C. C., Martins, M. B., Oliveira, C. E. S., Neves, V. A., Barboza Junior, L. A., Oliveira, B. R., Fronk, B. A., Santos, T. M., & Binotti, F. F. S. (2026). *Certifica Ciência: a bilingual batch certificate generator* (Version 1.1.0) [Computer software]. Artificial Intelligence in the Cerrado Research Group, PGAC/UEMS. https://doi.org/10.5281/zenodo.23666854
 
-> The DOI will be assigned by Zenodo once the first release is published on GitHub.
 
 ## 10. License
 
@@ -222,6 +223,7 @@ Third-party libraries keep their own licences: [html2canvas](https://html2canvas
 - Bruno Rodrigues de Oliveira (UNESP) — [ORCID 0000-0002-1037-6541](https://orcid.org/0000-0002-1037-6541)
 - Bruno Aparecido Fronk
 - Thiago Martins dos Santos
+- Flávio Ferreira da Silva Binotti — [ORCID 0000-0002-2248-8954](https://orcid.org/0000-0002-2248-8954)
 
 **Research group:** [Artificial Intelligence in the Cerrado — CNPq Research Groups Directory](http://dgp.cnpq.br/dgp/espelhogrupo/2871755427518068)
 **Contact:** renatolustosa@uems.br
