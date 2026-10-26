@@ -52,28 +52,6 @@ authors:
   - family-names: "Barboza Junior"
     given-names: "Levi Alves"
     affiliation: "Universidade Estadual de Mato Grosso do Sul (UEMS)"
-version: 1.2.0
-message: "If you use this software, please cite it as below. / Se utilizar este software, cite-o conforme abaixo."
-title: "Certifica Ciência: a bilingual batch certificate generator"
-abstract: >-
-  Certifica Ciência is a single-file, browser-based application that generates
-  batch PDF certificates for courses, scientific events and extension projects.
-  It offers a Portuguese/English interface, customizable background, corner logos,
-  scanned signatures, an optional syllabus back page, participant import from Excel,
-  sequential registration numbers and an exportable registry of issued certificates.
-  All processing runs locally in the browser. Developed by the Artificial
-  Intelligence in the Cerrado Research Group (PGAC/UEMS, Brazil).
-type: software
-authors:
-  - family-names: "Lustosa Sobrinho"
-    given-names: "Renato"
-    orcid: "https://orcid.org/0000-0003-2176-6745"
-    email: "renatolustosa@uems.br"
-    affiliation: "Universidade Estadual de Mato Grosso do Sul (UEMS), Programa de Pós-Graduação em Agronomia (PGAC)"
-  - family-names: "Zoz"
-    given-names: "Tiago"
-    orcid: "https://orcid.org/0000-0003-2991-5485"
-    affiliation: "Universidade Estadual de Mato Grosso do Sul (UEMS)"
   - family-names: "Oliveira"
     given-names: "Bruno Rodrigues de"
     orcid: "https://orcid.org/0000-0002-1037-6541"
@@ -91,6 +69,7 @@ doi: "10.5281/zenodo.23666854"
 date-released: "2026-10-26"
 license: MIT
 repository-code: "https://github.com/renatolustosa-uems/certifica-ciencia"
+url: "https://renatolustosa-uems.github.io/certifica-ciencia/"
 keywords:
   - certificate generator
   - gerador de certificados
